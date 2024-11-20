@@ -1,0 +1,32 @@
+.vscode
+
+target/
+*.class
+**/target/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+/bin
+/build
+
+# Gradle Files #
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Eclipse Files #
+.classpath
+.project
+.factorypath
+.settings/
+/target/
+.springBeans
+.recommenders
+*.launch
+
+# IntelliJ Files #
+.idea
+*.iml
+*.ipr
+*.iws

@@ -1,0 +1,4 @@
+coingecko:
+  api:
+    key:  
+    base:  https://api.coingecko.com/api/v3 
