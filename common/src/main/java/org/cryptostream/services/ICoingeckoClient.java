@@ -1,6 +1,6 @@
-package org.cryptostream.marketservice.service;
+package org.cryptostream.services;
 
-import org.cryptostream.marketservice.model.PriceResponse;
+import org.cryptostream.model.PriceResponse;
 
 public interface ICoingeckoClient {
 

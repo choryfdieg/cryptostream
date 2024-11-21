@@ -4,8 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TradingService {
+public class TradingServiceMain {
     public static void main(String[] args) {
-        SpringApplication.run(TradingService.class, args);
+        
+        SpringApplication.run(TradingServiceMain.class, args);
     }
 }

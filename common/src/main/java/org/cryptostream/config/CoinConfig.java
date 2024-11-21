@@ -1,4 +1,4 @@
-package org.cryptostream.marketservice.config;
+package org.cryptostream.config;
 
 import java.util.Collections;
 import java.util.HashSet;

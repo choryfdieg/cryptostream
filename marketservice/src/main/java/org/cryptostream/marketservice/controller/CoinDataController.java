@@ -1,16 +1,13 @@
 package org.cryptostream.marketservice.controller;
 
-import org.cryptostream.marketservice.config.CoinConfig;
-import org.cryptostream.marketservice.model.PriceResponse;
-import org.cryptostream.marketservice.service.ICoingeckoClient;
+import org.cryptostream.config.CoinConfig;
+import org.cryptostream.model.PriceResponse;
+import org.cryptostream.services.ICoingeckoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @RestController
-@RequestMapping("api/v1/coin-data")
+@RequestMapping("api/v1/crypto-data")
 public class CoinDataController {
 
     @Autowired 

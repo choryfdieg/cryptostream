@@ -1,7 +1,7 @@
-package org.cryptostream.marketservice.service;
+package org.cryptostream.services;
 
-import org.cryptostream.marketservice.config.CoinConfig;
-import org.cryptostream.marketservice.model.PriceResponse;
+import org.cryptostream.config.CoinConfig;
+import org.cryptostream.model.PriceResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -38,7 +38,7 @@ public class CoingeckoClientImpl implements ICoingeckoClient {
     
         String url = String.format(coingeckoApiBase + PRICE_URL, ids);
     
-        Map<String, PriceResponse.Price> responseMap = restTemplate.exchange(url, HttpMethod.GET, entity, HashMap.class).getBody();
+        HashMap responseMap = restTemplate.exchange(url, HttpMethod.GET, entity, HashMap.class).getBody();
     
         return PriceResponse.builder().prices(responseMap).build();
         
@@ -52,8 +52,8 @@ public class CoingeckoClientImpl implements ICoingeckoClient {
         HttpEntity<String> entity = createHttpEntity();
         
         String url = String.format(coingeckoApiBase + PRICE_URL, coinId);
-        
-        Map<String, PriceResponse.Price> responseMap = restTemplate.exchange(url, HttpMethod.GET, entity, HashMap.class).getBody();
+    
+        HashMap responseMap = restTemplate.exchange(url, HttpMethod.GET, entity, HashMap.class).getBody();
         
         return PriceResponse.builder().prices(responseMap).build();
         
