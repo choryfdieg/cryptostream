@@ -10,14 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "notification")
+@Table(name = "notifications")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Notification {
+public class Notification extends BaseEntity {
     
-    @Column(name = "name", nullable = false)
+    @Column(name = "message", nullable = false)
     private String message;
     
 }

@@ -30,6 +30,9 @@ public class TradingService {
     @Autowired
     private ICoingeckoClient coingeckoClient;
     
+    @Autowired
+    private NotificationProducer notificationProducer;
+    
     public Transaction createTransaction(User user, TransactionType type, BigDecimal amount, String currency) {
     
         Optional<User> userOpt = userRepository.findById(1);
@@ -54,6 +57,8 @@ public class TradingService {
         transactionRepository.save(transaction);
     
         updateUserBalance(user, amount, currency, type);
+    
+        notificationProducer.sendNotification("El usuario " + user.getName() + " ha registrado una " + type.name() + ". Nuevo saldo para " + currency + " = " + amount);
         
         return transaction;
     }
