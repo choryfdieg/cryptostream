@@ -1,8 +1,8 @@
-package org.cryptostream.marketservice.controller;
+package org.cryptostream.controller;
 
 import org.cryptostream.config.CoinConfig;
 import org.cryptostream.model.PriceResponse;
-import org.cryptostream.services.ICoingeckoClient;
+import org.cryptostream.service.ICoingeckoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,12 +10,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/crypto-data")
 public class CoinDataController {
 
-    @Autowired 
-    private final ICoingeckoClient coingeckoClient;
-    
-    public CoinDataController(ICoingeckoClient coingeckoClient) {
-        this.coingeckoClient = coingeckoClient;
-    }
+    @Autowired
+    private ICoingeckoClient coingeckoClient;
     
     @GetMapping("/prices/all")
     public PriceResponse getAllCoinPrices(){
@@ -24,10 +20,8 @@ public class CoinDataController {
     
     @GetMapping("/prices/{coin_id}")
     public PriceResponse getPricesByCoinId(@PathVariable(name = "coin_id") String coinId) {
-        if (!CoinConfig.getSupportedCoinIds().contains(coinId)) {
-            throw new IllegalArgumentException("The coin with id " + coinId + " is not supported");
-        }
-        return coingeckoClient.getPriceByCoinId(coinId);
+        String coingeckoId = CoinConfig.getCryptoIdsMap().get(coinId);
+        return coingeckoClient.getPriceByCoinId(coingeckoId);
     }
     
     @GetMapping("/history/{coin_id}")
@@ -36,10 +30,8 @@ public class CoinDataController {
         @RequestParam(name = "start_date", required = true) String startDate,
         @RequestParam(name = "end_date", required = true) String endDate) {
     
-        if (!CoinConfig.getSupportedCoinIds().contains(coinId)) {
-            throw new IllegalArgumentException("The coin with id " + coinId + " is not supported");
-        }
+        String coingeckoId = CoinConfig.getCryptoIdsMap().get(coinId);
         
-        return coingeckoClient.getCoinHistoryByCoinId(coinId, startDate, endDate);
+        return coingeckoClient.getCoinHistoryByCoinId(coingeckoId, startDate, endDate);
     }
 }

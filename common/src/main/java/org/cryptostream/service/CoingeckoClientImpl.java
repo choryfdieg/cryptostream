@@ -1,4 +1,4 @@
-package org.cryptostream.services;
+package org.cryptostream.service;
 
 import org.cryptostream.config.CoinConfig;
 import org.cryptostream.model.PriceResponse;
@@ -13,7 +13,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class CoingeckoClientImpl implements ICoingeckoClient {

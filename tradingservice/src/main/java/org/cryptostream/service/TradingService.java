@@ -1,10 +1,10 @@
 package org.cryptostream.service;
 
+import org.cryptostream.config.CoinConfig;
 import org.cryptostream.model.*;
 import org.cryptostream.repository.BalanceRepository;
 import org.cryptostream.repository.TransactionRepository;
 import org.cryptostream.repository.UserRepository;
-import org.cryptostream.services.ICoingeckoClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,10 +47,82 @@ public class TradingService {
                 .currency(currency)
                 .build();
                 
-        return transactionRepository.save(transaction);
+        transactionRepository.save(transaction);
+    
+        updateUserBalance(user, amount, currency, type);
+        
+        return transaction;
+    }
+    
+    private void updateUserBalance(User user, BigDecimal amount, String criptoCurrency, TransactionType type) {
+        
+        if(type.equals(TransactionType.BUY)){
+            updateBalanceWhenBuy(user, amount, criptoCurrency);
+        }
+    
+        if(type.equals(TransactionType.SELL)){
+            updateBalanceWhenSell(user, amount, criptoCurrency);
+        }
+        
+    }
+    
+    public void updateBalanceWhenBuy(User user, BigDecimal amount, String criptoCurrency) {
+        
+        Balance usdBalance = balanceRepository.findByUserIdAndCurrency(user.getId(), "USD");
+        Balance cryptoBalance = balanceRepository.findByUserIdAndCurrency(user.getId(), criptoCurrency);
+        
+        BigDecimal cryptoPrice = getCryptoPrice(criptoCurrency);
+        BigDecimal totalCost = amount.multiply(cryptoPrice);
+        
+        usdBalance.setAmount(usdBalance.getAmount().subtract(totalCost));
+        
+        if (cryptoBalance == null) {
+            cryptoBalance = Balance.builder()
+                    .user(user)
+                    .currency(criptoCurrency)
+                    .amount(BigDecimal.ZERO)
+                    .build();
+        }
+        
+        cryptoBalance.setAmount(cryptoBalance.getAmount().add(amount));
+        
+        balanceRepository.save(usdBalance);
+        balanceRepository.save(cryptoBalance);
+    }
+    
+    public void updateBalanceWhenSell(User user, BigDecimal amount, String cryptoCurrency) {
+    
+        Balance usdBalance = balanceRepository.findByUserIdAndCurrency(user.getId(), "USD");
+        Balance cryptoBalance = balanceRepository.findByUserIdAndCurrency(user.getId(), cryptoCurrency);
+        
+        BigDecimal cryptoPrice = getCryptoPrice(cryptoCurrency);
+        BigDecimal totalRevenue = amount.multiply(cryptoPrice);
+        
+        cryptoBalance.setAmount(cryptoBalance.getAmount().subtract(amount));
+        
+        if (usdBalance == null) {
+            usdBalance = Balance.builder()
+                    .user(user)
+                    .currency("USD")
+                    .amount(BigDecimal.ZERO)
+                    .build();
+        }
+        
+        usdBalance.setAmount(usdBalance.getAmount().add(totalRevenue));
+        
+        balanceRepository.save(usdBalance);
+        balanceRepository.save(cryptoBalance);
+    
+    }
+    public List<Transaction> getAllTransactions() {
+        return transactionRepository.findAll();
+    }
+    
+    public List<Transaction> getTransactionsByUserId(Integer userId) {
+        return transactionRepository.findByUserId(userId);
     }
 
-    public List<Balance> getBalancesForUser(Integer userId) {
+    public List<Balance> getBalancesByUserId(Integer userId) {
         return balanceRepository.findByUserId(userId);
     }
     
@@ -92,10 +164,13 @@ public class TradingService {
     }
     
     private BigDecimal getCryptoPrice(String currency) {
-        PriceResponse priceResponse = coingeckoClient.getPriceByCoinId(currency);
     
-        Integer value = priceResponse.getPrices().get(currency).get("usd");
+        String coingeckoId = CoinConfig.getCryptoIdsMap().get(currency);
     
-        return BigDecimal.valueOf(value);
+        PriceResponse priceResponse = coingeckoClient.getPriceByCoinId(coingeckoId);
+    
+        BigDecimal value = BigDecimal.valueOf(((Number)priceResponse.getPrices().get(coingeckoId).get("usd")).doubleValue());
+    
+        return value;
     }
 }

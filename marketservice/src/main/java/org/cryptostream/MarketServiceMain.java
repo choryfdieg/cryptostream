@@ -1,12 +1,12 @@
-package org.cryptostream.marketservice;
+package org.cryptostream;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MarketService {
+public class MarketServiceMain {
     public static void main(String[] args) {
     
-        SpringApplication.run(MarketService.class, args);
+        SpringApplication.run(MarketServiceMain.class, args);
     }
 }

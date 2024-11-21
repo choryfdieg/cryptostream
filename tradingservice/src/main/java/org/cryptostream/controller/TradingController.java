@@ -37,10 +37,22 @@ public class TradingController {
 
         return ResponseEntity.ok(transaction);
     }
+    
+    @GetMapping("/transactions/all")
+    public ResponseEntity<List<Transaction>> getAllTransactions() {
+        List<Transaction> transactions = tradingService.getAllTransactions();
+        return ResponseEntity.ok(transactions);
+    }
+    
+    @GetMapping("/transactions/{userId}")
+    public ResponseEntity<List<Transaction>> getTransactionsById(@PathVariable Integer userId) {
+        List<Transaction> transactions = tradingService.getTransactionsByUserId(userId);
+        return ResponseEntity.ok(transactions);
+    }
 
     @GetMapping("/balances/{userId}")
-    public ResponseEntity<List<Balance>> getBalancesForUser(@PathVariable Integer userId) {
-        List<Balance> balances = tradingService.getBalancesForUser(userId);
+    public ResponseEntity<List<Balance>> getBalancesByUserId(@PathVariable Integer userId) {
+        List<Balance> balances = tradingService.getBalancesByUserId(userId);
         return ResponseEntity.ok(balances);
     }
 

@@ -1,4 +1,4 @@
-package org.cryptostream.services;
+package org.cryptostream.service;
 
 import org.cryptostream.model.PriceResponse;
 
