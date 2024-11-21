@@ -1,9 +1,9 @@
 package org.cryptostream.controller;
 
-import org.cryptostream.model.Balance;
-import org.cryptostream.model.Transaction;
-import org.cryptostream.model.TransactionRequest;
-import org.cryptostream.model.User;
+import org.cryptostream.model.entity.Balance;
+import org.cryptostream.model.entity.Transaction;
+import org.cryptostream.model.entity.TransactionRequest;
+import org.cryptostream.model.entity.User;
 import org.cryptostream.service.TradingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/crypto-trading")
+@RequestMapping("api/v1/trading")
 public class TradingController {
 
     @Autowired

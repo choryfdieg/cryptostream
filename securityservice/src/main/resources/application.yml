@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+coingecko:
+  api:
+    key:  
+    base:  https://api.coingecko.com/api/v3
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: trading
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/v1/trading/**
+        - id: market
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/v1/market/**

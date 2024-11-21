@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8082
 
 coingecko:
   api:
@@ -8,7 +8,7 @@ coingecko:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:/
+    url: jdbc:mysql://localhost:3306/cryptostream
     username: 
     password: 
     driver-class-name: com.mysql.cj.jdbc.Driver

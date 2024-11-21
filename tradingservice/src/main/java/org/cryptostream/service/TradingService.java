@@ -2,6 +2,10 @@ package org.cryptostream.service;
 
 import org.cryptostream.config.CoinConfig;
 import org.cryptostream.model.*;
+import org.cryptostream.model.entity.Balance;
+import org.cryptostream.model.entity.Transaction;
+import org.cryptostream.model.entity.TransactionType;
+import org.cryptostream.model.entity.User;
 import org.cryptostream.repository.BalanceRepository;
 import org.cryptostream.repository.TransactionRepository;
 import org.cryptostream.repository.UserRepository;

@@ -1,6 +1,6 @@
 package org.cryptostream.repository;
 
-import org.cryptostream.model.Balance;
+import org.cryptostream.model.entity.Balance;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

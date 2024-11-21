@@ -1,4 +1,4 @@
-package org.cryptostream.model;
+package org.cryptostream.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
