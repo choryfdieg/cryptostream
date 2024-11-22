@@ -12,7 +12,7 @@ La integración con Kafka también permite desacoplar los microservicios y la co
 si alguno de estos servicios no está en ejecución al momento de una notificación o mensaje.
 En resumen, la escalabilidad y el desacoplamiento son las razones principales por las cuales se implementan este tipo de arquitecturas.
 
-El diseño de la arquitectura implementada puede ser visualizado en el siguiente [diagrama de arquitectura](https://drive.google.com/file/d/1wda7qFrXGkCtNQOV0E_Y16ZHulMTAf_0/view?usp=drive_link).
+El diseño de la arquitectura implementada puede ser visualizado en el siguiente [diagrama de arquitectura](https://drive.google.com/file/d/1MTTjfHWwwmxNJu0xIHvpisUb4mGwI0NG/view?usp=sharing).
 
 
 ## Servicios Principales
