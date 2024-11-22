@@ -12,7 +12,7 @@ public class NotificationConsumer {
     @Autowired
     private NotificationRepository notificacionRepository;
     
-    @KafkaListener(id = "notification-listener", topics = "cryptostream-topic",
+    @KafkaListener(id = "notification-listener", topics = "cryptostream-topic", groupId = "notification-group",
         autoStartup = "${listen.auto.start:true}", concurrency = "${listen.concurrency:3}")
     public void listen(String data) {
         Notification notification = Notification.builder().message(data).build();

@@ -2,14 +2,23 @@ server:
   port: 8080
 
 spring:
+  datasource:
+    url: jdbc:mysql://mysql:3306/cryptostream
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+      hibernate:
+        ddl-auto: none
+      show-sql: true
   cloud:
     gateway:
       routes:
         - id: trading
-          uri: http://localhost:8082
+          uri: http://tradingservice:8082
           predicates:
             - Path=/api/v1/trading/**
         - id: market
-          uri: http://localhost:8081
+          uri: http://marketservice:8081
           predicates:
             - Path=/api/v1/market/**

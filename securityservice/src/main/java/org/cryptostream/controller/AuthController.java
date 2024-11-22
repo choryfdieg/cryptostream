@@ -23,7 +23,6 @@ public class AuthController {
         @RequestParam("user") String username,
         @RequestParam("password") String encryptedPass) {
         
-        
         String token = jwtAuthtenticationConfig.getJWTToken(username);
         
         Map<String, String> tokenMap = new HashMap<>();

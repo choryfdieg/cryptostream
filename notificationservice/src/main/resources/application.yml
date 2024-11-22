@@ -1,13 +1,16 @@
+server:
+  port: 8083
+  
 coingecko:
   api:
-    key:  
+    key:  CG-7QPJ7ScyM3LgSh3vWQG4Wm8K
     base:  https://api.coingecko.com/api/v3
     
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/cryptostream
-    username: 
-    password: 
+    url: jdbc:mysql://mysql:3306/cryptostream
+    username: root
+    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
       hibernate:
@@ -15,7 +18,7 @@ spring:
       show-sql: true
 
   kafka:
-    bootstrap-servers: localhost:29092
+    bootstrap.servers: kafka:9092
     consumer:
       auto-offset-reset: earliest
       enable-auto-commit: true
@@ -24,4 +27,4 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       properties:
         max.poll.interval.ms: 300000
-        max.poll.records: 10  
+        max.poll.records: 10

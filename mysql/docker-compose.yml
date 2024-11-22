@@ -1,0 +1,20 @@
+services:
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: cryptostream
+    volumes:
+      - ./cryptostream-db.sql:/docker-entrypoint-initdb.d/backup.sql
+      - mysql_data:/var/lib/mysql
+    networks:
+      - cryptostream_network
+
+volumes:
+  mysql_data:
+
+networks:
+  cryptostream_network:
+    external: true

@@ -1,0 +1,40 @@
+services:      
+  marketservice:
+    build:
+      context: ./marketservice
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - cryptostream_network
+
+  tradingservice:
+    build:
+      context: ./tradingservice
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - cryptostream_network
+
+  notificationservice:
+    build:
+      context: ./notificationservice
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    networks:
+      - cryptostream_network
+  
+  securityservice:
+    build:
+      context: ./securityservice
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - cryptostream_network
+  
+networks:
+  cryptostream_network:
+    external: true
