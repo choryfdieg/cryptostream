@@ -11,6 +11,7 @@ import org.cryptostream.repository.TransactionRepository;
 import org.cryptostream.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -33,18 +34,23 @@ public class TradingService {
     @Autowired
     private NotificationProducer notificationProducer;
     
-    public Transaction createTransaction(User user, TransactionType type, BigDecimal amount, String currency) {
+    @Transactional
+    public Transaction createTransaction(String userId, TransactionType type, BigDecimal amount, String currency) {
     
-        Optional<User> userOpt = userRepository.findById(1);
+        Optional<User> userOpt = userRepository.findByEmail(userId);
     
-        user = userOpt.get();
+        if (!userOpt.isPresent()) {
+            throw new IllegalArgumentException("Usuario no encontrado");
+        }
+    
+        User user = userOpt.get();
     
         if (type.equals(TransactionType.SELL) && !hasSufficientToSell(user, amount, currency)) {
-            throw new IllegalArgumentException("Saldo insuficiente para realizar la venta");
+            throw new IllegalArgumentException("No tiene saldo suficiente para realizar la venta");
         }
     
         if (type.equals(TransactionType.BUY) && !hasSufficientToBuy(user, amount, currency)) {
-            throw new IllegalArgumentException("Saldo insuficiente para realizar la compra");
+            throw new IllegalArgumentException("No tiene saldo suficiente en USD para realizar la compra");
         }
         
         Transaction transaction = Transaction.builder()
@@ -58,7 +64,10 @@ public class TradingService {
     
         updateUserBalance(user, amount, currency, type);
     
-        notificationProducer.sendNotification("El usuario " + user.getName() + " ha registrado una " + type.name() + ". Nuevo saldo para " + currency + " = " + amount);
+        String notificationMessage = String.format("El usuario %s ha registrado una %s. Moneda: %s, Cantidad: %s ",
+            user.getName(), type.name(), currency, amount);
+            
+        notificationProducer.sendNotification(notificationMessage);
         
         return transaction;
     }

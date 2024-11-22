@@ -1,5 +1,6 @@
 package org.cryptostream.controller;
 
+import org.cryptostream.controller.api.TradingAPI;
 import org.cryptostream.model.entity.Balance;
 import org.cryptostream.model.entity.Transaction;
 import org.cryptostream.model.entity.TransactionRequest;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/trading")
-public class TradingController {
+public class TradingController implements TradingAPI {
 
     @Autowired
     private final TradingService tradingService;
@@ -24,12 +25,10 @@ public class TradingController {
     
     @PostMapping("/transactions")
     public ResponseEntity<Transaction> createTransaction(
-            @RequestBody TransactionRequest request) {
+            TransactionRequest request) {
             
-        User user = getUserFromRequest();
-
         Transaction transaction = tradingService.createTransaction(
-                user,
+                request.getUserId(),
                 request.getTransactionType(),
                 request.getAmount(),
                 request.getCurrency()
@@ -45,23 +44,14 @@ public class TradingController {
     }
     
     @GetMapping("/transactions/{userId}")
-    public ResponseEntity<List<Transaction>> getTransactionsById(@PathVariable Integer userId) {
+    public ResponseEntity<List<Transaction>> getTransactionsById(Integer userId) {
         List<Transaction> transactions = tradingService.getTransactionsByUserId(userId);
         return ResponseEntity.ok(transactions);
     }
 
     @GetMapping("/balances/{userId}")
-    public ResponseEntity<List<Balance>> getBalancesByUserId(@PathVariable Integer userId) {
+    public ResponseEntity<List<Balance>> getBalancesByUserId(Integer userId) {
         List<Balance> balances = tradingService.getBalancesByUserId(userId);
         return ResponseEntity.ok(balances);
-    }
-
-    private User getUserFromRequest() {
-        
-        // get fron jwt
-        
-        
-    
-        return User.builder().build(); 
     }
 }

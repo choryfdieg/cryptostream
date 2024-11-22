@@ -1,6 +1,7 @@
 package org.cryptostream.service;
 
 import org.cryptostream.config.CoinConfig;
+import org.cryptostream.model.CoinHistoryResponse;
 import org.cryptostream.model.PriceResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -59,7 +60,7 @@ public class CoingeckoClientImpl implements ICoingeckoClient {
     }
     
     @Override
-    public Object getCoinHistoryByCoinId(String coinId, String startDate, String endDate) {
+    public CoinHistoryResponse getCoinHistoryByCoinId(String coinId, String startDate, String endDate) {
     
         Date start;
         Date end;
@@ -82,7 +83,7 @@ public class CoingeckoClientImpl implements ICoingeckoClient {
         
         String url = String.format(coingeckoApiBase + HISTORY_URL, coinId, startTime, endTime);
         
-        return restTemplate.exchange(url, HttpMethod.GET, entity, Object.class).getBody();
+        return restTemplate.exchange(url, HttpMethod.GET, entity, CoinHistoryResponse.class).getBody();
     }
     
     private HttpEntity<String> createHttpEntity() {
