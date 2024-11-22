@@ -2,9 +2,18 @@
 
 CryptoStream es una aplicación basada en **Maven** y **Spring Boot** que implementa una arquitectura de microservicios. Los microservicios se comunican de manera asíncrona a través de un tópico en **Kafka**.
 
-## Arquitectura
+**Por qué se eligió está arquitectura**
+
+CryptoStream es un servicio con una proyección de demanda bastante alta. Las criptomonedas y las transacciones con criptomonedas aumentan cada vez más.
+Es posible que servicios como este tengan una gran cantidad de usuarios y manejen un gran volumen de transacciones.
+Las arquitecturas orientadas a microservicios son escalables porque permiten añadir nuevos componentes sin afectar elementos existentes o incluso añadir recursos
+de forma independiente en función de la demanda de un servicio u otro.
+La integración con Kafka también permite desacoplar los microservicios y la comunicación asincrona, esto evita que se generen errores
+si alguno de estos servicios no está en ejecución al momento de una notificación o mensaje.
+En resumen, la escalabilidad y el desacoplamiento son las razones principales por las cuales se implementan este tipo de arquitecturas.
 
 El diseño de la arquitectura implementada puede ser visualizado en el siguiente [diagrama de arquitectura](https://drive.google.com/file/d/1wda7qFrXGkCtNQOV0E_Y16ZHulMTAf_0/view?usp=drive_link).
+
 
 ## Servicios Principales
 
@@ -133,4 +142,27 @@ Se usó Trello para realizar un split detallado de cada requerimiento y sus tare
 Puedes visualizar el tablero [Enlace de tablero en trello](https://trello.com/b/mFaKjQRm/cryptostream)
 
 
+## Fuentes de apoyo
 
+Esta implementación fue creada apoyada en diversas fuentes, las principales se pueden ver a continuanción:
+
+**ChatGpt-4o-mini**
+
+https://chatgpt.com/
+
+**JWT**
+
+https://medium.com/@tericcabrel/implement-jwt-authentication-in-a-spring-boot-3-application-5839e4fd8fac
+
+**Kafka**
+
+https://medium.com/@akshat.available/kafka-with-spring-boot-using-docker-compose-1552cccaec8e
+https://docs.spring.io/spring-kafka/reference/kafka.html
+
+**Swagger**
+
+https://bell-sw.com/blog/documenting-rest-api-with-swagger-in-spring-boot-3/
+
+**Coingecko**
+
+https://docs.coingecko.com/reference/introduction
